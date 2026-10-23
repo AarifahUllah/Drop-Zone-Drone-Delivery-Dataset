@@ -48,4 +48,4 @@ Flight logs contain GPS coordinates. Exact locations are removed or coarsened be
 
 ## Contact
 
-Open an [issue](https://github.com/YOUR-ORG/drone-delivery-dataset/issues) or email YOUR-CONTACT@example.edu.
+Open an [issue](https://github.com/AarifahUllah/Drop-Zone-Drone-Delivery-Dataset/issues) or email aarifahullah@gwu.edu.
