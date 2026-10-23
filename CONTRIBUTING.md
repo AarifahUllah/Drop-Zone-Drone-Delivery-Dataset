@@ -1,6 +1,6 @@
 # Contributing flight videos
 
-Thank you for helping! This guide explains how to record and submit drone delivery videos. The same content, plus a file checker and the upload link, is on the [project site](https://YOUR-ORG.github.io/drone-delivery-dataset/#submit).
+Thank you for helping! This guide explains how to record and submit drone delivery videos. The same content, plus a file checker and the upload link, is on the [project site](https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/#submit).
 
 ## Part 1: The collection flight
 
@@ -25,7 +25,7 @@ Upload **both** the video and its flight log for every flight. For DJI drones, t
 
 > **DJI users:** turn on **Camera settings → Video subtitles** (called *Video Caption* on some models) *before* flying, or no `.SRT` file will be created.
 
-1. Go to the [submission page](https://YOUR-ORG.github.io/drone-delivery-dataset/#submit) and use the checker to confirm your files are paired.
+1. Go to the [submission page](https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/#submit) and use the checker to confirm your files are paired.
 2. Confirm the three consent statements.
 3. On the upload page, enter your **name and email**, then upload all files with their original names.
 

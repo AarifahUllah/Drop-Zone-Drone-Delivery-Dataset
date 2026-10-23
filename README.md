@@ -4,7 +4,7 @@ An open, community-built dataset of drone **delivery descent videos** with synch
 
 Volunteer pilots around the world fly a short, standardized "delivery" (hover high → slow descent → hover low) over homes, parks, townhouses, and rooftops, then upload the video and flight log.
 
-**→ Contribute: https://YOUR-ORG.github.io/drone-delivery-dataset/**
+**→ Contribute: https://github.com/AarifahUllah/Drop-Zone-Drone-Delivery-Dataset/**
 
 ## What's collected
 
@@ -19,7 +19,7 @@ Each flight follows the same profile:
 2. Descend slowly to **25–30 ft (about 8–9 m)**
 3. Hover for 30–50 s (simulated package drop)
 
-The full pilot guide is in [CONTRIBUTING.md](CONTRIBUTING.md) and on the [project site](https://YOUR-ORG.github.io/drone-delivery-dataset/).
+The full pilot guide is in [CONTRIBUTING.md](CONTRIBUTING.md) and on the [project site](https://github.com/AarifahUllah/Drop-Zone-Drone-Delivery-Dataset/).
 
 ## Dataset access
 
