@@ -1,29 +1,21 @@
-# Drone Delivery Dataset
+# OpenDV: Crowdsourced drone videos for open drone vision
 
-An open, community-built dataset of drone **delivery descent videos** with synchronized flight logs, for research on autonomous drone delivery and landing-zone perception.
+Crowdsourced drone videos, flight logs and descriptions, released to the public for building perception and reasoning AI models for drone applications such as package delivery, search and rescue, and first response.
 
-Volunteer pilots around the world fly a short, standardized "delivery" (hover high → slow descent → hover low) over homes, parks, townhouses, and rooftops, then upload the video and flight log.
-
-**→ Contribute: https://github.com/AarifahUllah/Drop-Zone-Drone-Delivery-Dataset/**
+**Website:** https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/
+**Contribute:** https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/collect.html
 
 ## What's collected
 
-| Item | Example | Notes |
+Each sample has three files with the same name:
+
+| File | Example | Contents |
 |---|---|---|
-| Video | `DJI_0042.MP4` | Camera pointing straight down, continuous recording |
-| Flight log | `DJI_0042.SRT` | Per-frame altitude, GPS, camera settings (DJI "video subtitles") |
+| Video | `DJI_0042.MP4` | Downward-facing camera, continuous recording |
+| Flight log | `DJI_0042.SRT` | Per-frame altitude, GPS, camera settings |
+| Description | `DJI_0042.txt` | One paragraph: time, weather, delivery spot, nearby objects, anything blocking the spot |
 
-Each flight follows the same profile:
-
-1. Hover at **100–150 ft (30–45 m)** for 10–30 s directly above the landing spot
-2. Descend slowly to **25–30 ft (about 8–9 m)**
-3. Hover for 30–50 s (simulated package drop)
-
-The full pilot guide is in [CONTRIBUTING.md](CONTRIBUTING.md) and on the [project site](https://github.com/AarifahUllah/Drop-Zone-Drone-Delivery-Dataset/).
-
-## Dataset access
-
-The dataset, including sample flights, is on Hugging Face: https://huggingface.co/datasets/YOUR-ORG/drone-delivery-dataset
+Flight profile: hover at 100–150 ft (30–45 m) → slow descent → hover at 25–30 ft (about 8–9 m). Full guide: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## How submissions become data
 
@@ -31,21 +23,28 @@ The dataset, including sample flights, is on Hugging Face: https://huggingface.c
 Contributor ──upload──▶ Private Dropbox folder ──team review──▶ Hugging Face dataset (public)
 ```
 
-Each submission is reviewed for safety, flight-profile compliance, and privacy (faces, plates, GPS) before it is published. Rejected submissions are deleted.
+Reviews cover safety, the flight profile and privacy (faces, plates, GPS). Rejected submissions are deleted.
+
+## Dataset access
+
+Hugging Face: https://huggingface.co/datasets/aarifahullah/OpenDV. Each published sample, including the team's own samples, includes its one-paragraph description.
 
 ## Privacy
 
-Flight logs contain GPS coordinates. Exact locations are removed or coarsened before public release. Contributor names and emails are never published. See [CONTRIBUTING.md](CONTRIBUTING.md#privacy-and-consent).
+Exact GPS locations are removed before release. Contributor names and emails are never published.
 
 ## License
 
-- **Data** (videos and logs): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
-- **Code** in this repository (website, tools): MIT
+- **Data:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Contributors keep copyright of their own videos and license them under CC BY 4.0. See [LICENSE-DATA](LICENSE-DATA).
+- **Code** (website, tools): MIT. See [LICENSE](LICENSE).
 
-## Citation
+## Team
 
-<!-- EDIT: add BibTeX once you have a paper or DOI -->
+The George Washington University: Peng Wei (pwei@gwu.edu), Aarifah Ullah (aarifahullah@gwu.edu), Mahyar Ghazanfari (mahyar.ghazanfari@gwu.edu)
 
-## Contact
+## Editing the site
 
-Open an [issue](https://github.com/AarifahUllah/Drop-Zone-Drone-Delivery-Dataset/issues) or email aarifahullah@gwu.edu.
+- Pages: `docs/index.html` (home), `docs/collect.html` (data collection)
+- Links (upload, Hugging Face, GitHub): top of `docs/site.js`
+- Images and clips: `docs/assets/` (see `docs/assets/README.md`)
+- Preview locally: `powershell -ExecutionPolicy Bypass -File tools\serve.ps1 -Root docs`, then open http://localhost:8123

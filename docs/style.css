@@ -1,0 +1,71 @@
+/* Shared styles for the OpenDV site (home + data collection). */
+:root {
+  --bg: #ffffff; --surface: #f6f7f9; --text: #2b2f36; --muted: #626a78;
+  --border: #e1e4e9; --accent: #1f6feb; --pill: #2b2f36; --pill-text: #ffffff;
+  --ok: #1a7f37; --warn: #9a6700; --bad: #cf222e; --code: #eef1f5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1216; --surface: #171b21; --text: #e6e9ee; --muted: #9aa3b2;
+    --border: #2a313b; --accent: #4c8dff; --pill: #e6e9ee; --pill-text: #0f1216;
+    --ok: #3fb950; --warn: #d29922; --bad: #f85149; --code: #212730;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1216; --surface: #171b21; --text: #e6e9ee; --muted: #9aa3b2;
+  --border: #2a313b; --accent: #4c8dff; --pill: #e6e9ee; --pill-text: #0f1216;
+  --ok: #3fb950; --warn: #d29922; --bad: #f85149; --code: #212730;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.6 "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+.wrap.narrow { max-width: 860px; }
+.muted { color: var(--muted); }
+code { background: var(--code); padding: 1px 6px; border-radius: 4px; font-size: .9em; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Top bar with tabs */
+.topbar { border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 10; }
+.topbar .wrap { display: flex; align-items: center; gap: 4px; min-height: 56px; flex-wrap: wrap; }
+.brand { font-weight: 700; font-size: 1.1rem; color: var(--text); text-decoration: none; margin-right: 16px; }
+.tab { color: var(--muted); text-decoration: none; padding: 16px 12px; border-bottom: 2px solid transparent; font-size: .95rem; }
+.tab:hover { color: var(--text); }
+.tab[aria-current="page"] { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+.theme-toggle { margin-left: auto; background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  border-radius: 999px; padding: 6px 14px; font: inherit; font-size: .88rem; cursor: pointer; }
+.theme-toggle:hover { border-color: var(--accent); }
+
+/* Pill buttons (OpenVLA-style link row) */
+.pills { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 24px 0 8px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; background: var(--pill); color: var(--pill-text);
+  padding: 9px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: .95rem; border: 0; }
+.pill svg { width: 18px; height: 18px; }
+.pill.soon, .pill[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.pill.outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+
+/* Sections */
+section { padding: 40px 0; scroll-margin-top: 56px; }
+section + section { border-top: 1px solid var(--border); }
+h2 { font-size: 1.6rem; margin: 0 0 16px; }
+.center { text-align: center; }
+h3 { font-size: 1.1rem; margin: 24px 0 8px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+.card h4 { margin: 0 0 4px; font-size: 1rem; }
+.card p { margin: 0; color: var(--muted); font-size: .94rem; }
+ul.tight { padding-left: 20px; margin: 8px 0; }
+ul.tight li { margin: 4px 0; }
+
+/* Media; missing files are hidden or shown as "coming soon" by site.js */
+.media { position: relative; border-radius: 10px; overflow: hidden; background: var(--code); aspect-ratio: 16 / 9; }
+.media img, .media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media.soon img, .media.soon video { visibility: hidden; }
+.media.soon::after { content: "Video coming soon"; position: absolute; inset: 0; display: grid; place-items: center;
+  color: var(--muted); font-size: .9rem; }
+figure { margin: 0; }
+figcaption { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+
+footer { padding: 32px 0 48px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--border); }

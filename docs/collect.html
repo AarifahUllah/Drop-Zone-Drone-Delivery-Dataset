@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Collection · OpenDV</title>
+<meta name="description" content="Fly a short simulated drone delivery and contribute the video, flight log and description to OpenDV.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<style>
+  .hero { padding: 48px 0 32px; }
+  .hero h1 { font-size: clamp(1.8rem, 4.5vw, 2.5rem); line-height: 1.2; margin: 0 0 12px; }
+  .hero p { color: var(--muted); font-size: 1.1rem; margin: 0; max-width: 680px; }
+  .hero .pills { justify-content: flex-start; }
+  .jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .jump a { font-size: .85rem; color: var(--muted); text-decoration: none; border: 1px solid var(--border);
+    border-radius: 999px; padding: 3px 12px; }
+  .jump a:hover { color: var(--text); border-color: var(--accent); }
+
+  .steps { list-style: none; padding: 0; margin: 20px 0; display: grid; gap: 12px; counter-reset: s; }
+  .steps li { background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px 18px 16px 60px; position: relative; counter-increment: s; }
+  .steps li::before { content: counter(s); position: absolute; left: 18px; top: 16px; width: 28px; height: 28px;
+    border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; display: grid; place-items: center; font-size: .9rem; }
+  .steps strong { display: block; }
+  .steps li.has-img { display: grid; grid-template-columns: 1fr 220px; gap: 16px; align-items: center; }
+  @media (max-width: 620px) { .steps li.has-img { grid-template-columns: 1fr; } }
+  .profile { width: 100%; height: auto; }
+
+  .scene { padding: 0; overflow: hidden; }
+  .scene .media { aspect-ratio: 4 / 3; border-radius: 0; }
+  .scene .body { padding: 14px 18px 16px; }
+
+  .example { border-left: 4px solid var(--accent); background: var(--surface); padding: 14px 18px; border-radius: 6px; margin: 12px 0; }
+  .example .file { font-family: ui-monospace, monospace; font-size: .85rem; color: var(--muted); display: block; margin-bottom: 4px; }
+  .note { border-left: 4px solid var(--warn); background: var(--surface); padding: 12px 16px; border-radius: 6px; margin: 12px 0; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 32px; }
+
+  .flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0 24px; }
+  .flow .n { font-size: .78rem; color: var(--accent); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .panel h3:first-child { margin-top: 0; }
+  .drop { display: block; border: 2px dashed var(--border); border-radius: 10px; padding: 24px 16px; text-align: center;
+    cursor: pointer; background: var(--bg); }
+  .drop.over, .drop:hover { border-color: var(--accent); }
+  .drop input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .drop:focus-within { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .drop .pick { display: inline-block; background: var(--accent); color: #fff; font-weight: 600;
+    padding: 8px 18px; border-radius: 999px; margin-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: .9rem; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); word-break: break-all; }
+  .ok { color: var(--ok); font-weight: 600; } .bad { color: var(--bad); font-weight: 600; }
+  label.check { display: flex; gap: 10px; align-items: flex-start; margin: 8px 0; }
+  label.check input { margin-top: 5px; width: 18px; height: 18px; }
+  .status { list-style: none; padding: 0; margin: 0 0 14px; }
+  .status li { margin: 4px 0; color: var(--muted); }
+  .status li::before { content: "○ "; }
+  .status li.done { color: var(--ok); }
+  .status li.done::before { content: "✓ "; }
+  .upload { display: inline-block; background: var(--accent); color: #fff; padding: 12px 24px; border-radius: 8px;
+    font-weight: 600; text-decoration: none; }
+  .upload[aria-disabled="true"] { background: var(--border); color: var(--muted); pointer-events: none; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">OpenDV</a>
+    <a class="tab" href="index.html">Home</a>
+    <a class="tab" href="collect.html" aria-current="page">Data Collection</a>
+    <button class="theme-toggle" id="theme-toggle" type="button">◐ Theme</button>
+  </div>
+</header>
+
+<main class="wrap narrow">
+  <div class="hero">
+    <h1>Fly a mission, help train safer delivery drones</h1>
+    <p>Fly two or three short drone missions over a house, a park, or a rooftop, then upload the drone video, flight log and a short description. The data helps researchers train perception and reasoning AI models that make drone delivery more intelligent and safe.</p>
+    <div class="pills">
+      <a class="pill" href="#fly">Flight guide</a>
+      <a class="pill outline" href="#submit">Submit</a>
+    </div>
+    <nav class="jump" aria-label="On this page">
+      <a href="#about">About</a><a href="#fly">How to fly</a><a href="#diversity">Scenes</a>
+      <a href="#describe">Description</a><a href="#safety">Safety</a><a href="#privacy">Privacy</a><a href="#submit">Submit</a>
+    </nav>
+  </div>
+
+  <section id="about">
+    <h2>About the data collection effort</h2>
+    <div class="grid">
+      <div class="card"><h4>What you record</h4><p>2–3 short videos of a slow, vertical descent, camera pointing straight down.</p></div>
+      <div class="card"><h4>What you upload</h4><p>For each video: the video, its flight log (e.g. DJI <code>.MP4</code> + <code>.SRT</code>) and a <a href="#describe">one-paragraph description</a> (<code>.txt</code>).</p></div>
+      <div class="card"><h4>Time needed</h4><p>About 2 minutes of flying per video, plus setup.</p></div>
+    </div>
+  </section>
+
+  <section id="access">
+    <h2>Access the data</h2>
+    <p>Sample videos, flight logs and descriptions are on Hugging Face. Approved contributions are added there.</p>
+    <a class="pill" data-link="dataset" href="#"><span class="label">Dataset on Hugging Face</span></a>
+  </section>
+
+  <section id="fly">
+    <h2>How to fly a data collection flight</h2>
+    <p class="muted">Pretend you're a delivery drone bringing a package to a house, park, townhouse or rooftop.</p>
+    <ol class="steps">
+      <li class="has-img"><div><strong>Start: 100–150 ft (30–45 m), hover 10–30 s</strong>
+        Fly almost directly above your delivery spot. Point the camera straight down and <em>start recording</em>.</div>
+        <div class="media"><img src="assets/step-1.jpg" alt="Top-down view from about 30 meters; the delivery spot is small in the frame"></div></li>
+      <li class="has-img"><div><strong>Descend slowly to 25–30 ft (about 8–9 m)</strong>
+        Gentle throttle, smooth and slow. Keep recording.</div>
+        <div class="media"><img src="assets/step-2.jpg" alt="Mid-descent; the delivery spot grows larger in the frame"></div></li>
+      <li class="has-img"><div><strong>Deliver: hover 30–50 s</strong>
+        Hold steady while you imagine lowering a package on a rope and reeling it back up.</div>
+        <div class="media"><img src="assets/step-3.jpg" alt="Close top-down view at delivery height"></div></li>
+      <li><strong>Stop recording. Done!</strong>
+        The climb up doesn't need to be recorded.</li>
+    </ol>
+    <svg class="profile" viewBox="0 0 720 200" role="img" aria-label="Flight profile: hover at 100 to 150 feet for 10 to 30 seconds, descend slowly, hover at 25 to 30 feet for 30 to 50 seconds">
+      <line x1="60" y1="170" x2="700" y2="170" stroke="currentColor" stroke-opacity=".3"/>
+      <line x1="60" y1="20" x2="60" y2="170" stroke="currentColor" stroke-opacity=".3"/>
+      <path d="M60 40 H220 C300 40 360 135 440 135 H690" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+      <g fill="currentColor" font-size="13" font-family="system-ui, sans-serif">
+        <text x="70" y="30">Hover 10–30 s</text>
+        <text x="290" y="70">Slow descent</text>
+        <text x="500" y="125">Hover 30–50 s ("delivery")</text>
+        <text x="4" y="45">100–150 ft</text>
+        <text x="8" y="139">25–30 ft</text>
+        <text x="62" y="190" fill-opacity=".6">● Recording starts</text>
+        <text x="600" y="190" fill-opacity=".6">Recording ends ●</text>
+      </g>
+    </svg>
+  </section>
+
+  <section id="diversity">
+    <h2>Make each scene different</h2>
+    <p>Change at least one thing between your 2–3 videos:</p>
+    <div class="grid" data-media-group>
+      <div class="card scene"><div class="media"><img src="assets/scene-1.jpg" alt="Sample scene in midday light"></div>
+        <div class="body"><h4>Lighting</h4><p>Dawn, morning, noon, dusk; sunny or overcast</p></div></div>
+      <div class="card scene"><div class="media"><img src="assets/scene-2.jpg" alt="Sample scene with a different delivery spot"></div>
+        <div class="body"><h4>Delivery spot</h4><p>Driveway, yard, rooftop, park</p></div></div>
+      <div class="card scene"><div class="media"><img src="assets/scene-3.jpg" alt="Sample scene with objects near the delivery spot"></div>
+        <div class="body"><h4>Nearby objects</h4><p>Cars, bikes, trees, pets, people (with consent)</p></div></div>
+    </div>
+  </section>
+
+  <section id="describe">
+    <h2>Write a short description</h2>
+    <p>For each video, save one paragraph in a text file with the <strong>same name</strong> as the video (e.g. <code>DJI_0042.txt</code>; Notepad works). Include:</p>
+    <ul class="tight">
+      <li>Date, time of day and weather</li>
+      <li>Type of delivery spot (driveway, yard, rooftop…)</li>
+      <li>Objects near the spot</li>
+      <li>Whether anything enters or blocks the spot, and when</li>
+    </ul>
+    <div class="example">
+      <span class="file">DJI_0042.txt</span>
+      Recorded Oct 12 at about 5:30 pm, overcast with light wind. The delivery spot is the paved driveway of a suburban house. A silver car is parked to the left and a large tree overhangs the top of the frame. A dog walks across the spot around 0:45, briefly blocking it, then leaves.
+    </div>
+  </section>
+
+  <section id="safety">
+    <h2>Safety tips</h2>
+    <div class="two">
+      <ul class="tight">
+        <li><strong>Follow local rules.</strong> US: check <a href="https://www.faa.gov/uas/getting_started/b4ufly">FAA B4UFLY</a> (DC has a 15-nautical-mile no-drone zone). Elsewhere: your aviation authority.</li>
+        <li><strong>Good weather only.</strong> Most drones can't handle rain or mist.</li>
+        <li><strong>Full battery.</strong> Hovering drains it quickly.</li>
+        <li><strong>DJI:</strong> turn on <em>Camera settings → Video subtitles</em> to get the <code>.SRT</code> log.</li>
+      </ul>
+      <ul class="tight">
+        <li><strong>Slow and steady.</strong> Gentle throttle; any pitch or roll gradually.</li>
+        <li><strong>Camera straight down</strong> (gimbal at −90°).</li>
+        <li><strong>Record continuously</strong> from the top hover to the end of the delivery hover.</li>
+        <li><strong>Keep the drone in sight</strong>, and watch your own footing and traffic.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <h2>Privacy</h2>
+    <div class="note"><strong>Flight logs contain GPS coordinates.</strong> We remove exact locations before anything is published.</div>
+    <ul class="tight">
+      <li>Only film people who have agreed. Avoid neighbors' private spaces.</li>
+      <li>Your name and email are used only to contact and credit you. They are never published.</li>
+      <li>Contributions are released under <strong>CC BY 4.0</strong>.</li>
+      <li>To withdraw a submission, email <a href="mailto:aarifahullah@gwu.edu">aarifahullah@gwu.edu</a>.</li>
+    </ul>
+  </section>
+
+  <section id="submit">
+    <h2>Submit</h2>
+    <div class="flow">
+      <div class="card"><div class="n">1 · You</div><h4>Upload</h4><p>Files go to a private folder only the team can see.</p></div>
+      <div class="card"><div class="n">2 · Us</div><h4>Review</h4><p>We check safety, the flight steps and privacy.</p></div>
+      <div class="card"><div class="n">3 · Everyone</div><h4>Published</h4><p>Approved flights join the dataset. We'll email you either way.</p></div>
+    </div>
+
+    <div class="panel">
+      <h3>1. Check your files</h3>
+      <p class="muted" style="margin-top:0">Select the video, flight log and description for every flight. This only checks names in your browser; nothing is uploaded yet.</p>
+      <label class="drop" id="drop">
+        <input type="file" id="files" multiple accept=".mp4,.mov,.srt,.txt">
+        <span class="pick">Choose files</span><br>
+        <span class="muted">or drag them here</span>
+      </label>
+      <div id="result" aria-live="polite"></div>
+
+      <h3>2. Confirm</h3>
+      <label class="check"><input type="checkbox" class="agree"> I flew legally under my local drone rules.</label>
+      <label class="check"><input type="checkbox" class="agree"> Everyone identifiable in my videos agreed to be filmed.</label>
+      <label class="check"><input type="checkbox" class="agree"> I release my videos under CC BY 4.0 and understand exact GPS will be removed before release.</label>
+
+      <h3>3. Upload</h3>
+      <ul class="status">
+        <li id="st-files">Files checked: every video has a log and a description</li>
+        <li id="st-boxes">All three boxes ticked</li>
+      </ul>
+      <a class="upload" id="upload" target="_blank" rel="noopener" aria-disabled="true">Go to upload page</a>
+      <p class="muted" id="hint" style="font-size:.9rem;margin:8px 0 0">The button turns blue when both items above are checked. On the upload page, enter your name and email, then add all files with their original names.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap narrow">Questions? <a data-link="github" href="#">Open an issue on GitHub</a> or email <a href="mailto:aarifahullah@gwu.edu">aarifahullah@gwu.edu</a>.</div>
+</footer>
+
+<script src="site.js"></script>
+<script>
+  const VIDEO = /\.(mp4|mov)$/i, LOG = /\.srt$/i, DESC = /\.txt$/i;
+  const input = document.getElementById("files"), drop = document.getElementById("drop");
+  const result = document.getElementById("result"), btn = document.getElementById("upload");
+  const hint = document.getElementById("hint"), boxes = [...document.querySelectorAll(".agree")];
+  let filesOk = false;
+
+  const stem = n => n.replace(/\.[^.]+$/, "").toLowerCase();
+  const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const mb = b => (b / 1048576).toFixed(0) + " MB";
+  const cell = (f, label) => f ? esc(f.name) : `<span class="bad">Missing ${label}</span>`;
+
+  function check(list) {
+    const files = [...list];
+    const byStem = new Map();
+    const other = [];
+    for (const f of files) {
+      const kind = VIDEO.test(f.name) ? "video" : LOG.test(f.name) ? "log" : DESC.test(f.name) ? "desc" : null;
+      if (!kind) { other.push(f); continue; }
+      const k = stem(f.name);
+      if (!byStem.has(k)) byStem.set(k, {});
+      byStem.get(k)[kind] = f;
+    }
+
+    let rows = "", problems = 0, videos = 0;
+    for (const g of byStem.values()) {
+      if (g.video) videos++;
+      const ok = g.video && g.log && g.desc;
+      if (!ok) problems++;
+      rows += `<tr><td>${g.video ? `${esc(g.video.name)} <span class="muted">(${mb(g.video.size)})</span>` : cell(null, "video")}</td>
+        <td>${cell(g.log, "log")}</td><td>${cell(g.desc, "description")}</td>
+        <td class="${ok ? "ok" : "bad"}">${ok ? "✓" : "✗"}</td></tr>`;
+    }
+
+    let msg;
+    if (!videos) { msg = `<p class="bad">No video files found.</p>`; problems++; }
+    else if (problems) msg = `<p class="bad">${problems} flight(s) are missing a file. Each video needs a <code>.SRT</code> log and a <code>.txt</code> description with the same name.</p>`;
+    else msg = `<p class="ok">All ${videos} flight(s) have a video, log and description.</p>`;
+    if (other.length) msg += `<p class="muted">Ignored: ${other.map(f => esc(f.name)).join(", ")}</p>`;
+
+    result.innerHTML = msg + (rows ? `<table><thead><tr><th>Video</th><th>Flight log</th><th>Description</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : "");
+    filesOk = problems === 0;
+    update();
+  }
+
+  function update() {
+    const boxesOk = boxes.every(b => b.checked);
+    document.getElementById("st-files").classList.toggle("done", filesOk);
+    document.getElementById("st-boxes").classList.toggle("done", boxesOk);
+    const ready = filesOk && boxesOk && !!LINKS.upload;
+    btn.setAttribute("aria-disabled", String(!ready));
+    if (ready) btn.href = LINKS.upload; else btn.removeAttribute("href");
+    if (filesOk && boxesOk && !LINKS.upload) hint.textContent = "The upload link isn't available yet. Please check back soon.";
+  }
+
+  input.addEventListener("change", () => check(input.files));
+  boxes.forEach(b => b.addEventListener("change", update));
+  ["dragenter", "dragover"].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", ev => check(ev.dataTransfer.files));
+</script>
+</body>
+</html>
