@@ -4,7 +4,7 @@
 const LINKS = {
   upload: "https://www.dropbox.com/request/69qywdr46vbl6ddfehfx",
   dataset: "https://huggingface.co/datasets/aarifahullah/OpenDV",
-  github: "https://github.com/AarifahUllah/Drop-Zone-Drone-Delivery-Dataset",
+  github: "https://github.com/AarifahUllah/OpenDV",
 };
 
 // Fill in [data-link] elements, or mark them "coming soon".
@@ -50,5 +50,5 @@ document.querySelectorAll(".media").forEach(box => {
   };
   el.addEventListener("error", miss);
   if (el.tagName === "IMG" && el.complete && !el.naturalWidth) miss();
-  if (el.tagName === "SOURCE" && box.querySelector("video").networkState === 3) miss();
 });
+// Videos mark themselves with an inline onerror on <source>, which can't miss an early failure.

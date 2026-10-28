@@ -43,6 +43,7 @@ code { background: var(--code); padding: 1px 6px; border-radius: 4px; font-size:
 .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--pill); color: var(--pill-text);
   padding: 9px 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: .95rem; border: 0; }
 .pill svg { width: 18px; height: 18px; }
+.pill .hf { font-size: 1.15rem; line-height: 1; }
 .pill.soon, .pill[aria-disabled="true"] { opacity: .45; pointer-events: none; }
 .pill.outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
 

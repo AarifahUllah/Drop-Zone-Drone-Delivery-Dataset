@@ -1,6 +1,6 @@
 # Contributing to OpenDV
 
-Thank you for helping! This guide explains how to record and submit drone delivery videos. The same content, plus a file checker and the upload link, is on the [project site](https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/collect.html#submit).
+Thank you for helping! This guide explains how to record and submit drone delivery videos. The same content, plus a file checker and the upload link, is on the [project site](https://aarifahullah.github.io/OpenDV/collect.html#submit).
 
 ## Part 1: The data collection flight
 
@@ -25,7 +25,7 @@ For every flight, upload three files with the same name: the video, its flight l
 
 > **DJI users:** turn on **Camera settings → Video subtitles** (called *Video Caption* on some models) *before* flying, or no `.SRT` file will be created.
 
-1. Go to the [submission page](https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/collect.html#submit) and use the checker to confirm every video has its log and description.
+1. Go to the [submission page](https://aarifahullah.github.io/OpenDV/collect.html#submit) and use the checker to confirm every video has its log and description.
 2. Confirm the three consent statements.
 3. On the upload page, enter your **name and email**, then upload all files with their original names.
 
