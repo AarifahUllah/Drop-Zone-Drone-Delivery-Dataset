@@ -2,8 +2,8 @@
 
 Crowdsourced drone videos, flight logs and descriptions, released to the public for building perception and reasoning AI models for drone applications such as package delivery, search and rescue, and first response.
 
-**Website:** https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/ </br>
-**Contribute:** https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/collect.html
+**Website:** https://aarifahullah.github.io/OpenDV/ </br>
+**Contribute:** https://aarifahullah.github.io/OpenDV/collect.html
 
 ## What's collected
 
