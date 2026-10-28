@@ -1,8 +1,8 @@
-# OpenDV: Crowdsourced drone videos for open drone vision
+# OpenDV: Crowdsourced drone videos for open drone vision and reasoning
 
 Crowdsourced drone videos, flight logs and descriptions, released to the public for building perception and reasoning AI models for drone applications such as package delivery, search and rescue, and first response.
 
-**Website:** https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/
+**Website:** https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/ </br>
 **Contribute:** https://aarifahullah.github.io/Drop-Zone-Drone-Delivery-Dataset/collect.html
 
 ## What's collected
@@ -40,7 +40,7 @@ Exact GPS locations are removed before release. Contributor names and emails are
 
 ## Team
 
-The George Washington University: Peng Wei (pwei@gwu.edu), Aarifah Ullah (aarifahullah@gwu.edu), Mahyar Ghazanfari (mahyar.ghazanfari@gwu.edu)
+The George Washington University: Aarifah Ullah (aarifahullah@gwu.edu), Mahyar Ghazanfari (mahyar.ghazanfari@gwu.edu), Peng Wei (pwei@gwu.edu)
 
 ## Editing the site
 
